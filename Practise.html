@@ -1,150 +1,150 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My experiment</title>
-    <script src="https://unpkg.com/jspsych@8.1.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
-    <link href="https://unpkg.com/jspsych@8.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body></body>
-  <script>
 
-    /* initialize jsPsych */
-    var jsPsych = initJsPsych({
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });
-    initJsPsych({
-      show_progress_bar: true,
-      experiment_width: 2000
-});
+<head>
+  <title>My experiment</title>
+  <script src="https://unpkg.com/jspsych@8.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
+  <link href="https://unpkg.com/jspsych@8.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
 
-    /* create timeline */
-    var timeline = [];
+<body></body>
+<script>
 
-   
+  /* initialize jsPsych */
+  var jsPsych = initJsPsych({
+    on_finish: function () {
+      jsPsych.data.displayData();
+    }
+  });
+  initJsPsych({
+    show_progress_bar: true,
+    experiment_width: 2000
+  });
 
-    /* define welcome message trial */
-    var welcome = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Welcome to the experiment. Press any key to begin."
-    };
-    timeline.push(welcome);
+  /* create timeline */
+  var timeline = [];
 
-    /* Preload images */
-var preload = {
-  type: jsPsychPreload,
-  stimuli: [
-    'VCSshapes/ShapeRed1.jpg',
-    'VCSshapes/ShapeBlue2.jpg',
-    'VCSshapes/ShapeGreen3.jpg',
-    'VCSshapes/ShapeYellow4.jpg'
-  ]
-};
-timeline.push(preload);
+  /* define welcome message trial */
+  var welcome = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: "Welcome to the experiment. Press any key to begin."
+  };
+  timeline.push(welcome);
 
-/* Create canvas */
-var instructions = {
-     type: jsPsychCanvasKeyboardResponse,
-     stimulus: draw_instruction,
-     CanvasHeight: 2000,
-     CanvasWidth: 2000,
-     prompt: "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
-   }
+  /* Preload images */
+  var preload = {
+    type: jsPsychPreload,
+    stimuli: [
+      'stim/VCS_1_RED.jpg',
+      'stim/VCS_1_BLUE.jpg',
+      'stim/VCS_1_GREEN.jpg',
+      'stim/VCS_73_BLUE.jpg'
+    ]
+  };
+  timeline.push(preload);
 
-
-/* Insert images to instructions page */
-function draw_instruction(c) {
-  var ctx = c.getContext('2d');  // Get canvas context
-
-  var img1 = new Image();
-  img1.src = "VCSshapes/ShapeRed1.jpg";
-  img1.onload = function() { ctx.drawImage(img1, 10, 75, 150, 150); };
-
-  var img2 = new Image();
-  img2.src = "VCSshapes/ShapeBlue2.jpg";
-  img2.onload = function() { ctx.drawImage(img2, 300, 75, 150, 150); };
-
-  var img3 = new Image();
-  img3.src = "VCSshapes/ShapeGreen3.jpg";
-  img3.onload = function() { ctx.drawImage(img3, 400, 400, 150, 150); };
-
-  var img4 = new Image();
-  img4.src = "VCSshapes/ShapeYellow4.jpg";
-  img4.onload = function() { ctx.drawImage(img4, 900, 300, 150, 150); };
-}
-
-timeline.push(instructions);
+  /* Create canvas */
+  var instructions = {
+    type: jsPsychCanvasKeyboardResponse,
+    stimulus: draw_instruction,
+    canvas_size: [500, 918], // height x width
+    prompt: "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
+  }
 
 
-    /* define trial stimuli array for timeline variables */
-    var test_stimuli = [
-      { stimulus: "VCSshapes/ShapeRed1.jpg",  correct_response: 'f'},
-      { stimulus: "VCSshapes/ShapeBlue2.jpg",  correct_response: 'j'},
-      { stimulus: "VCSshapes/ShapeGreen3.jpg", correct_response: 'p'},
-      { stimulus: "VCSshapes/ShapeYellow4.jpg", correct_response: 'q'}
-    ];
+  /* Insert images to instructions page */
+  function draw_instruction(c) {
+    let ctx = c.getContext('2d');  // Get canvas context
 
-    /* define fixation and test trials */
-    var fixation = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '<div style="font-size:100px;">+</div>',
-      choices: "NO_KEYS",
-      trial_duration: function(){
-        return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
-      },
-      data: {
-        task: 'fixation'
-      }
-    };
+    var img1 = new Image();
+    img1.src = "stim/VCS_1_RED.jpg";
+    img1.onload = function () { ctx.drawImage(img1, 0, 0, 150, 150); }; // the last four numbers are top left x, top left y, image width, image height
 
-    var test = {
-      type: jsPsychImageKeyboardResponse,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      choices: ['f', 'j', 'p', 'q'],
-      data: {
-        task: 'response',
-        correct_response: jsPsych.timelineVariable('correct_response')
-      },
-      on_finish: function(data){
-        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
-      }
-    };
+    var img2 = new Image();
+    img2.src = "stim/VCS_1_BLUE.jpg";
+    img2.onload = function () { ctx.drawImage(img2, 150, 150, 150, 150); };
 
-    /* define test procedure */
-    var test_procedure = {
-      timeline: [fixation, test],
-      timeline_variables: test_stimuli,
-      repetitions: 4,
-      randomize_order: true
-    };
-    timeline.push(test_procedure);
+    var img3 = new Image();
+    img3.src = "stim/VCS_1_GREEN.jpg";
+    img3.onload = function () { ctx.drawImage(img3, 0, 150, 150, 150); };
 
-    /* define debrief */
-    var debrief_block = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: function() {
+    var img4 = new Image();
+    img4.src = "stim/VCS_73_BLUE.jpg";
+    img4.onload = function () { ctx.drawImage(img4, 150, 0, 150, 150); };
+  }
 
-        var trials = jsPsych.data.get().filter({task: 'response'});
-        var correct_trials = trials.filter({correct: true});
-        var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
-        var rt = Math.round(correct_trials.select('rt').mean());
+  timeline.push(instructions);
 
-        return `<p>You responded correctly on ${accuracy}% of the trials.</p>
+
+  /* define trial stimuli array for timeline variables */
+  var test_stimuli = [
+    { stimulus: "stim/VCS_1_RED.jpg", correct_response: 'f' },
+    { stimulus: "stim/VCS_1_BLUE.jpg", correct_response: 'j' },
+    { stimulus: "stim/VCS_1_GREEN.jpg", correct_response: 'p' },
+    { stimulus: "stim/VCS_73_BLUE.jpg", correct_response: 'q' }
+  ];
+
+  /* define fixation and test trials */
+  var fixation = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<div style="font-size:100px;">+</div>',
+    choices: "NO_KEYS",
+    trial_duration: function () {
+      return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+    },
+    data: {
+      task: 'fixation'
+    }
+  };
+
+  var test = {
+    type: jsPsychImageKeyboardResponse,
+    stimulus: jsPsych.timelineVariable('stimulus'),
+    choices: ['f', 'j', 'p', 'q'],
+    data: {
+      task: 'response',
+      correct_response: jsPsych.timelineVariable('correct_response')
+    },
+    on_finish: function (data) {
+      data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+    }
+  };
+
+  /* define test procedure */
+  var test_procedure = {
+    timeline: [fixation, test],
+    timeline_variables: test_stimuli,
+    repetitions: 4,
+    randomize_order: true
+  };
+  timeline.push(test_procedure);
+
+  /* define debrief */
+  var debrief_block = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function () {
+
+      var trials = jsPsych.data.get().filter({ task: 'response' });
+      var correct_trials = trials.filter({ correct: true });
+      var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+      var rt = Math.round(correct_trials.select('rt').mean());
+
+      return `<p>You responded correctly on ${accuracy}% of the trials.</p>
           <p>Your average response time was ${rt}ms.</p>
           <p>Press any key to complete the experiment. Thank you!</p>`;
 
-      }
-    };
+    }
+  };
   timeline.push(debrief_block);
 
-    /* start the experiment */
-    jsPsych.run(timeline);
+  /* start the experiment */
+  jsPsych.run(timeline);
 
-  </script>
+</script>
+
 </html>
