@@ -52,7 +52,7 @@
   var instructions = {
     type: jsPsychCanvasKeyboardResponse,
     stimulus: draw_instruction,
-    canvas_size: [500, 918], // height x width
+    canvas_size: [500, 1300], // height x width
     prompt: "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
   }
 
@@ -63,23 +63,24 @@
 
     var img1 = new Image();
     img1.src = "stim/VCS_1_RED.jpg";
-    img1.onload = function () { ctx.drawImage(img1, 0, 0, 150, 150); }; // the last four numbers are top left x, top left y, image width, image height
+    img1.onload = function () { ctx.drawImage(img1, 140, 0, 150, 150); }; // the last four numbers are top left x, top left y, image width, image height
 
     var img2 = new Image();
     img2.src = "stim/VCS_1_BLUE.jpg";
-    img2.onload = function () { ctx.drawImage(img2, 150, 150, 150, 150); };
+    img2.onload = function () { ctx.drawImage(img2, 440, 0, 150, 150); };
 
     var img3 = new Image();
     img3.src = "stim/VCS_1_GREEN.jpg";
-    img3.onload = function () { ctx.drawImage(img3, 0, 150, 150, 150); };
+    img3.onload = function () { ctx.drawImage(img3, 740, 0, 150, 150); };
 
-    var img4 = new Image();
-    img4.src = "stim/VCS_73_BLUE.jpg";
-    img4.onload = function () { ctx.drawImage(img4, 150, 0, 150, 150); };
+    var img5 = new Image ();
+    img5.src = "VCSshapes/VCS_2.png";
+    img5.onload = function(
+      ctx = fillStyle = 'Red',
+      ctx = strokeStyle = 'Black',
+      ctx = drawImage(img4, 1040, 0, 150, 150))
   }
-
-  timeline.push(instructions);
-
+  timeline.push (instructions);
 
   /* define trial stimuli array for timeline variables */
   var test_stimuli = [
@@ -119,7 +120,7 @@
   var test_procedure = {
     timeline: [fixation, test],
     timeline_variables: test_stimuli,
-    repetitions: 4,
+    repetitions: 3,
     randomize_order: true
   };
   timeline.push(test_procedure);
