@@ -43,7 +43,11 @@
       'stim/VCS_1_RED.jpg',
       'stim/VCS_1_BLUE.jpg',
       'stim/VCS_1_GREEN.jpg',
-      'stim/VCS_73_BLUE.jpg'
+      'stim/VCS_73_BLUE.jpg',
+      'VCSshapes/shape.jpg',
+      'VCSshapes/Shape2.jpg',
+      'VCSshapes/Shape3.jpg',
+      'VCSshapes/Shape4.jpg'
     ]
   };
   timeline.push(preload);
@@ -62,33 +66,48 @@
     let ctx = c.getContext('2d');  // Get canvas context
 
     var img1 = new Image();
-    img1.src = "stim/VCS_1_RED.jpg";
-    img1.onload = function () { ctx.drawImage(img1, 140, 0, 150, 150); }; // the last four numbers are top left x, top left y, image width, image height
+    img1.src = "VCSshapes/Shape4.jpg";
+    img1.onload = function () {
+      ctx.drawImage(img1, 140, 0, 150, 150);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#18a000";
+      ctx.fillRect(140, 0, 150, 150)
+    };
 
     var img2 = new Image();
-    img2.src = "stim/VCS_1_BLUE.jpg";
-    img2.onload = function () { ctx.drawImage(img2, 440, 0, 150, 150); };
+    img2.src = "VCSshapes/Shape3.jpg";
+    img2.onload = function () {
+      ctx.drawImage(img2, 440, 0, 150, 150);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#fee700";
+      ctx.fillRect(440, 0, 150, 150)
+    };
 
     var img3 = new Image();
-    img3.src = "stim/VCS_1_GREEN.jpg";
-    img3.onload = function () { ctx.drawImage(img3, 740, 0, 150, 150); };
+    img3.src = "VCSshapes/Shape2.jpg";
+    img3.onload = function () {
+      ctx.drawImage(img3, 740, 0, 150, 150);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#d20000";
+      ctx.fillRect(740, 0, 150, 150);
+    }
 
-    var img5 = new Image ();
-    img5.src = "VCSshapes/VCS_2.png";
-    img5.onload = function(
-      ctx = fillStyle = 'Red',
-      ctx = strokeStyle = 'Black',
-      ctx = drawImage(img4, 1040, 0, 150, 150))
+    var editedImage = null; // Global variable to store the edited image
+    var img5 = new Image();
+    img5.src = "VCSshapes/shape.jpg"; // Load the image
+    img5.onload = function () {
+      ctx.drawImage(img5, 1040, 0, 150, 150); // Draw image
+      ctx.globalCompositeOperation = "screen"; // Blending mode
+      ctx.fillStyle = "#0062d2";
+      ctx.fillRect(1040, 0, 150, 150); // Apply overlay
+    }
   }
-  timeline.push (instructions);
+
+  timeline.push(instructions);
 
   /* define trial stimuli array for timeline variables */
-  var test_stimuli = [
-    { stimulus: "stim/VCS_1_RED.jpg", correct_response: 'f' },
-    { stimulus: "stim/VCS_1_BLUE.jpg", correct_response: 'j' },
-    { stimulus: "stim/VCS_1_GREEN.jpg", correct_response: 'p' },
-    { stimulus: "stim/VCS_73_BLUE.jpg", correct_response: 'q' }
-  ];
+  var test_stimuli = [{ stimulus: img3, correct_response: 'p' }]
+
 
   /* define fixation and test trials */
   var fixation = {
