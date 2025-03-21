@@ -105,22 +105,26 @@
 
   timeline.push(instructions);
 
-  /* define trial stimuli array for timeline variables */
-  var test_stimuli = [{ stimulus: img3, correct_response: 'p' }]
+  function lists (c) {
+    canvas_size: [1040, 1300], // height x width
+    prompt =  "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
+  var image_list = ['img5', 'img1', 'img2', 'img3']
+  var item_locs = ['1040, 0, 150, 150', '740, 0, 150, 150', '440, 0, 150, 150', '140, 0, 150, 150']
+  }
 
 
-  /* define fixation and test trials */
-  var fixation = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div style="font-size:100px;">+</div>',
-    choices: "NO_KEYS",
-    trial_duration: function () {
-      return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
-    },
-    data: {
-      task: 'fixation'
+  /* create for loop */
+  function draw_stimulus(c) {
+    var ctx = c.getContext("2d");
+    trial_images = jsPsych.randomization.sampleWithoutReplacement(image_list, 4);
+
+    for (var i = 0; i < 4; i++) {
+
+      var img = new Image();
+      img.src = trial_images[i];
+      ctx.drawImage(img, x = item_locs[i][0], y = item_locs[2 * i][1], width = item_size, height = item_size)
     }
-  };
+  }
 
   var test = {
     type: jsPsychImageKeyboardResponse,
@@ -135,10 +139,11 @@
     }
   };
 
+
   /* define test procedure */
   var test_procedure = {
-    timeline: [fixation, test],
-    timeline_variables: test_stimuli,
+    timeline: [test],
+    timeline_variables: lists,
     repetitions: 3,
     randomize_order: true
   };
