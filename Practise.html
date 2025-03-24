@@ -14,6 +14,8 @@
 
 <body></body>
 <script>
+    let canvas_width = 1300 // sets canvas width
+    let canvas_height = 500 // sets canvas height
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -105,46 +107,41 @@
 
   timeline.push(instructions);
 
-  function lists (c) {
-    canvas_size: [1040, 1300], // height x width
-    prompt =  "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
-  var image_list = ['img5', 'img1', 'img2', 'img3']
-  var item_locs = ['1040, 0, 150, 150', '740, 0, 150, 150', '440, 0, 150, 150', '140, 0, 150, 150']
-  }
-
 
   /* create for loop */
   function draw_stimulus(c) {
     var ctx = c.getContext("2d");
+    var image_list = ['VCSshapes/shape.jpg', 'VCSshapes/Shape2.jpg', 'VCSshapes/Shape3.jpg', 'VCSshapes/Shape4.jpg'];
     trial_images = jsPsych.randomization.sampleWithoutReplacement(image_list, 4);
+    let item_size = 100
+    let item_locs = [
+      [canvas_width / 2 + item_size * -3.5, canvas_height / 2],
+      [canvas_width / 2 + item_size * -2.5, canvas_height / 2],
+      [canvas_width / 2 + item_size * 2, canvas_height / 2],
+      [canvas_width / 2 + item_size * 3, canvas_height / 2]
+    ]
 
     for (var i = 0; i < 4; i++) {
 
       var img = new Image();
       img.src = trial_images[i];
-      ctx.drawImage(img, x = item_locs[i][0], y = item_locs[2 * i][1], width = item_size, height = item_size)
+      ctx.drawImage(img, x = item_locs[i][0], y = item_locs[i][1], width = item_size, height = item_size)
     }
   }
 
   var test = {
-    type: jsPsychImageKeyboardResponse,
-    stimulus: jsPsych.timelineVariable('stimulus'),
+    type: jsPsychCanvasKeyboardResponse,
+    stimulus: draw_stimulus,
     choices: ['f', 'j', 'p', 'q'],
+    canvas_size: [canvas_height, canvas_width],
     data: {
-      task: 'response',
-      correct_response: jsPsych.timelineVariable('correct_response')
-    },
-    on_finish: function (data) {
-      data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
-    }
-  };
-
+      task: 'response'
+    }};
 
   /* define test procedure */
   var test_procedure = {
     timeline: [test],
-    timeline_variables: lists,
-    repetitions: 3,
+    repetitions: 8,
     randomize_order: true
   };
   timeline.push(test_procedure);
