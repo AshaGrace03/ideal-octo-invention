@@ -14,8 +14,8 @@
 
 <body></body>
 <script>
-    let canvas_width = 1300 // sets canvas width
-    let canvas_height = 500 // sets canvas height
+  let canvas_width = 1200 // sets canvas width
+  let canvas_height = 600 // sets canvas height
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -58,8 +58,9 @@
   var instructions = {
     type: jsPsychCanvasKeyboardResponse,
     stimulus: draw_instruction,
-    canvas_size: [500, 1300], // height x width
+    canvas_size: [500, 1200], // height x width
     prompt: "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
+
   }
 
 
@@ -70,77 +71,152 @@
     var img1 = new Image();
     img1.src = "VCSshapes/Shape4.jpg";
     img1.onload = function () {
-      ctx.drawImage(img1, 140, 0, 150, 150);
+      ctx.drawImage(img1, 100, 0, 150, 150);
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#18a000";
-      ctx.fillRect(140, 0, 150, 150)
+      ctx.fillRect(100, 0, 150, 150)
     };
 
     var img2 = new Image();
     img2.src = "VCSshapes/Shape3.jpg";
     img2.onload = function () {
-      ctx.drawImage(img2, 440, 0, 150, 150);
+      ctx.drawImage(img2, 400, 0, 150, 150);
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#fee700";
-      ctx.fillRect(440, 0, 150, 150)
+      ctx.fillRect(400, 0, 150, 150)
     };
 
     var img3 = new Image();
     img3.src = "VCSshapes/Shape2.jpg";
     img3.onload = function () {
-      ctx.drawImage(img3, 740, 0, 150, 150);
+      ctx.drawImage(img3, 700, 0, 150, 150);
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#d20000";
-      ctx.fillRect(740, 0, 150, 150);
+      ctx.fillRect(700, 0, 150, 150);
     }
 
     var editedImage = null; // Global variable to store the edited image
     var img5 = new Image();
     img5.src = "VCSshapes/shape.jpg"; // Load the image
     img5.onload = function () {
-      ctx.drawImage(img5, 1040, 0, 150, 150); // Draw image
+      ctx.drawImage(img5, 1000, 0, 150, 150); // Draw image
       ctx.globalCompositeOperation = "screen"; // Blending mode
       ctx.fillStyle = "#0062d2";
-      ctx.fillRect(1040, 0, 150, 150); // Apply overlay
+      ctx.fillRect(1000, 0, 150, 150); // Apply overlay
     }
   }
 
   timeline.push(instructions);
 
 
-  /* create for loop */
-  function draw_stimulus(c) {
-    var ctx = c.getContext("2d");
-    var image_list = ['VCSshapes/shape.jpg', 'VCSshapes/Shape2.jpg', 'VCSshapes/Shape3.jpg', 'VCSshapes/Shape4.jpg'];
-    trial_images = jsPsych.randomization.sampleWithoutReplacement(image_list, 4);
-    let item_size = 100
-    let item_locs = [
-      [canvas_width / 3 + item_size * -3.5, canvas_height / 9],
-      [canvas_width / 1 + item_size * -2.5, canvas_height / 9],
-      [canvas_width / 3 + item_size * -3.5, canvas_height / 2],
-      [canvas_width / 1 + item_size * -2.5, canvas_height / 2]
-    ]
-
-    for (var i = 0; i < 4; i++) {
-
-      var img = new Image();
-      img.src = trial_images[i];
-      ctx.drawImage(img, x = item_locs[i][0], y = item_locs[i][1], width = item_size, height = item_size)
-    }
-  }
-
-  var test = {
+  /* define fixation and test trials */
+  var stim = {
     type: jsPsychCanvasKeyboardResponse,
     stimulus: draw_stimulus,
-    choices: ['f', 'j', 'p', 'q'],
+    choices: "NO_KEYS",
+    trial_duration: 700,
     canvas_size: [canvas_height, canvas_width],
     data: {
       task: 'response'
-    }};
+    }
+  };
+  timeline.push(stim);
+
+  /* create for loop */
+  function draw_stimulus(c) {
+    let ctx = c.getContext('2d');
+
+    let item_size = 100
+    let item_locs = [
+      [canvas_width / 2 + item_size * -2, canvas_height / 2 + item_size * 1],
+      [canvas_width / 2 + item_size * 2, canvas_height / 2 + item_size * 1],
+      [canvas_width / 2 + item_size * -2, canvas_height / 2 + item_size * -1],
+      [canvas_width / 2 + item_size * 2, canvas_height / 2 + item_size * -1]
+    ]
+
+    shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0,1,2,3],4)
+
+    var img1 = new Image();
+    img1.src = "VCSshapes/Shape4.jpg";
+    img1.onload = function () {
+      ctx.drawImage(img1, item_locs[shuffledLocations[0]][0], item_locs[shuffledLocations[0]][1], item_size, item_size);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#18a000";
+      ctx.fillRect(item_locs[shuffledLocations[0]][0], item_locs[shuffledLocations[0]][1], item_size, item_size);
+    };
+
+    var img2 = new Image();
+    img2.src = "VCSshapes/Shape3.jpg";
+    img2.onload = function () {
+      ctx.drawImage(img2, item_locs[shuffledLocations[1]][0], item_locs[shuffledLocations[1]][1], item_size, item_size);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#fee700";
+      ctx.fillRect(item_locs[shuffledLocations[1]][0], item_locs[shuffledLocations[1]][1], item_size, item_size);
+    };
+
+    var img3 = new Image();
+    img3.src = "VCSshapes/Shape2.jpg";
+    img3.onload = function () {
+      ctx.drawImage(img3, item_locs[shuffledLocations[2]][0], item_locs[shuffledLocations[2]][1], item_size, item_size);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#d20000";
+      ctx.fillRect(item_locs[shuffledLocations[2]][0], item_locs[shuffledLocations[2]][1], item_size, item_size);
+    }
+
+    var editedImage = null; // Global variable to store the edited image
+    var img5 = new Image();
+    img5.src = "VCSshapes/shape.jpg"; // Load the image
+    img5.onload = function () {
+      ctx.drawImage(img5, item_locs[shuffledLocations[3]][0], item_locs[shuffledLocations[3]][1], item_size, item_size); // Draw image
+      ctx.globalCompositeOperation = "screen"; // Blending mode
+      ctx.fillStyle = "#0062d2";
+      ctx.fillRect(item_locs[shuffledLocations[3]][0], item_locs[shuffledLocations[3]][1], item_size, item_size); // Apply overlay
+    }
+
+  }
+
+  //  timeline.push(draw_stimulus);
+
+  /* define fixation and test trials */
+  var blank = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '',
+    choices: "NO_KEYS",
+    trial_duration: function () {
+      return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+    },
+    data: {
+      task: 'fixation'
+    }
+  };
+  timeline.push(blank)
+
+
+  var test = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: 'jyfyjf',
+    choices: ['f', 'p', 'q', 'j'],
+    data: {
+      task: 'fixation'
+    }
+  };
+  timeline.push(test)
+
+
+  var blank2 = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '',
+    choices: "NO_KEYS",
+    trial_duration: 700,
+    data: {
+      task: 'fixation'
+    }
+  };
+  timeline.push(blank2)
 
   /* define test procedure */
   var test_procedure = {
-    timeline: [test],
+    timeline: [stim, blank, test, blank2],
     repetitions: 8,
     randomize_order: true
   };
