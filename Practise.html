@@ -134,7 +134,7 @@
       [canvas_width / 2 + item_size * 2, canvas_height / 2 + item_size * -1]
     ]
 
-    shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0,1,2,3],4)
+    shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 4)
 
     var img1 = new Image();
     img1.src = "VCSshapes/Shape4.jpg";
@@ -191,17 +191,34 @@
   };
   timeline.push(blank)
 
+  function drawRect(c){
+    var ctx = c.getContext('2d');
+    ctx.beginPath();
+    ctx.rect(500, 300, 200, 200);
+    ctx.stroke();
 
-  var test = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: 'jyfyjf',
-    choices: ['f', 'p', 'q', 'j'],
-    data: {
-      task: 'fixation'
-    }
-  };
-  timeline.push(test)
+    ctx.beginPath();
+    ctx.rect(90, 300, 200, 200);
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.rect(500, 10, 200, 200);
+    ctx.stroke();
 
+    ctx.beginPath();
+    ctx.rect(90, 10, 200, 200);
+    ctx.stroke();
+}
+
+
+var response = {
+    type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [600, 800],
+    stimulus: drawRect,
+    choices: ['e','i'],
+    prompt: '<p>Click the corresponding letter to the shape you believe was in the outlined location</p>',
+    data: {shape: 'rectangle'}
+}
 
   var blank2 = {
     type: jsPsychHtmlKeyboardResponse,
@@ -216,7 +233,7 @@
 
   /* define test procedure */
   var test_procedure = {
-    timeline: [stim, blank, test, blank2],
+    timeline: [stim, blank, response, blank2],
     repetitions: 8,
     randomize_order: true
   };
