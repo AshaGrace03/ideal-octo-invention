@@ -15,7 +15,7 @@
 <body></body>
 <script>
   let canvas_width = 1200 // sets canvas width
-  let canvas_height = 600 // sets canvas height
+  let canvas_height = 500 // sets canvas height
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -59,7 +59,7 @@
     type: jsPsychCanvasKeyboardResponse,
     stimulus: draw_instruction,
     canvas_size: [500, 1200], // height x width
-    prompt: "In this experiment, a shape will appear in the center of the screen. If the shape is <strong>Blue</strong>, press the letter J on the keyboard. If the shape is <strong>Red</strong>, press the letter F as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
+    prompt: "Shapes will appear on the screen. If the shape is <strong>Blue</strong>, press the letter R on the keyboard. If the shape is <strong>Red</strong>, press the letter U as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
 
   }
 
@@ -112,10 +112,10 @@
   /* define fixation and test trials */
   var stim = {
     type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [600, 800],
     stimulus: draw_stimulus,
     choices: "NO_KEYS",
     trial_duration: 700,
-    canvas_size: [canvas_height, canvas_width],
     data: {
       task: 'response'
     }
@@ -128,11 +128,18 @@
 
     let item_size = 100
     let item_locs = [
-      [canvas_width / 2 + item_size * -2, canvas_height / 2 + item_size * 1],
-      [canvas_width / 2 + item_size * 2, canvas_height / 2 + item_size * 1],
-      [canvas_width / 2 + item_size * -2, canvas_height / 2 + item_size * -1],
-      [canvas_width / 2 + item_size * 2, canvas_height / 2 + item_size * -1]
+      [canvas_width / 3 + item_size * -3, canvas_height / 2 + item_size * 1],
+      [canvas_width / 3 + item_size * 2, canvas_height / 2 + item_size * 1],
+      [canvas_width / 3 + item_size * -3, canvas_height / 2 + item_size * -1],
+      [canvas_width / 3 + item_size * 2, canvas_height / 2 + item_size * -1]
     ]
+
+    test_location = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 1);
+    for (var i = 0; i < 2; i++) {
+      ctx.strokeRect(x = item_locs[2 * i][0], y = item_locs[2 * i][1], item_size, item_size);
+      ctx.strokeRect(x = item_locs[2 * i + 1][0], y = item_locs[2 * i + 1][1], item_size, item_size);
+
+    }
 
     shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 4)
 
@@ -180,6 +187,7 @@
   /* define fixation and test trials */
   var blank = {
     type: jsPsychHtmlKeyboardResponse,
+    canvas_size: [600, 800],
     stimulus: '',
     choices: "NO_KEYS",
     trial_duration: function () {
@@ -219,7 +227,7 @@
     stimulus: drawRect,
     choices: ['u', 'p', 'q', 'r'],
     prompt: '<p>Click the corresponding letter to the shape you believe was in the outlined location</p>',
-    data: {shape: 'rectangle'}
+    data: { shape: 'rectangle' }
   }
 
   var blank2 = {
