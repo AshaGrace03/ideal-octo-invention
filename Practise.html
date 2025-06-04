@@ -120,7 +120,6 @@
       task: 'response'
     }
   };
-  timeline.push(stim);
 
   /* create for loop */
   function draw_stimulus(c) {
@@ -138,8 +137,52 @@
     for (var i = 0; i < 2; i++) {
       ctx.strokeRect(x = item_locs[2 * i][0], y = item_locs[2 * i][1], item_size, item_size);
       ctx.strokeRect(x = item_locs[2 * i + 1][0], y = item_locs[2 * i + 1][1], item_size, item_size);
+    };
 
-    }
+    var img3 = new Image();
+    img3.src = "VCSshapes/Shape2.jpg";
+    img3.onload = function () {
+      ctx.drawImage(img3, 120, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#d20000";
+      ctx.fillRect(120, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText ("U",120, 500);
+    };
+
+    var editedImage = null;
+    var img5 = new Image();
+    img5.src = "VCSshapes/shape.jpg";
+    img5.onload = function () {
+      ctx.drawImage(img5, 270, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#0062d2";
+      ctx.fillRect(270, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText ("R",270, 500);
+    };
+
+    var img1 = new Image();
+    img1.src = "VCSshapes/Shape4.jpg";
+    img1.onload = function () {
+      ctx.drawImage(img1, 470, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#18a000";
+      ctx.fillRect(470, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText ("P",470, 500);
+    };
+
+    var img2 = new Image();
+    img2.src = "VCSshapes/Shape3.jpg";
+    img2.onload = function () {
+      ctx.drawImage(img2, 620, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#fee700";
+      ctx.fillRect(620, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText ("Q",620, 500);
+    };
 
     shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 4)
 
@@ -197,10 +240,48 @@
       task: 'fixation'
     }
   };
-  timeline.push(blank)
+
 
   function drawRect(c) {
     let ctx = c.getContext('2d');
+
+    var img3 = new Image();
+    img3.src = "VCSshapes/Shape2.jpg";
+    img3.onload = function () {
+      ctx.drawImage(img3, 120, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#d20000";
+      ctx.fillRect(120, 500, 50, 50);
+    };
+
+    var editedImage = null;
+    var img5 = new Image();
+    img5.src = "VCSshapes/shape.jpg";
+    img5.onload = function () {
+      ctx.drawImage(img5, 270, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#0062d2";
+      ctx.fillRect(270, 500, 50, 50);
+    };
+
+    var img1 = new Image();
+    img1.src = "VCSshapes/Shape4.jpg";
+    img1.onload = function () {
+      ctx.drawImage(img1, 470, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#18a000";
+      ctx.fillRect(470, 500, 50, 50);
+    };
+
+    var img2 = new Image();
+    img2.src = "VCSshapes/Shape3.jpg";
+    img2.onload = function () {
+      ctx.drawImage(img2, 620, 500, 50, 50);
+      ctx.globalCompositeOperation = "screen";
+      ctx.fillStyle = "#fee700";
+      ctx.fillRect(620, 500, 50, 50);
+    };
+
 
     let item_size = 100
     let item_locs = [
@@ -223,10 +304,9 @@
 
   var response = {
     type: jsPsychCanvasKeyboardResponse,
-    canvas_size: [500, 800],
+    canvas_size: [600, 800],
     stimulus: drawRect,
     choices: ['u', 'p', 'q', 'r'],
-    prompt: '<p>Click the corresponding letter to the shape you believe was in the outlined location</p>',
     data: { shape: 'rectangle' }
   }
 
@@ -239,7 +319,6 @@
       task: 'fixation'
     }
   };
-  timeline.push(blank2)
 
   /* define test procedure */
   var test_procedure = {
