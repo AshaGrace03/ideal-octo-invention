@@ -23,10 +23,11 @@
       jsPsych.data.displayData();
     }
   });
-  initJsPsych({
-    show_progress_bar: true,
-    experiment_width: 2000
+
+  var jsPsych = initJsPsych({
+    show_progress_bar: true
   });
+
 
   /* create timeline */
   var timeline = [];
@@ -115,7 +116,7 @@
     canvas_size: [600, 800],
     stimulus: draw_stimulus,
     choices: "NO_KEYS",
-    trial_duration: 700,
+    trial_duration: 900,
     data: {
       task: 'response'
     }
@@ -146,8 +147,6 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#d20000";
       ctx.fillRect(120, 500, 50, 50);
-      ctx.font = "50px Arial";
-      ctx.fillText ("U",120, 500);
     };
 
     var editedImage = null;
@@ -158,8 +157,6 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#0062d2";
       ctx.fillRect(270, 500, 50, 50);
-      ctx.font = "50px Arial";
-      ctx.fillText ("R",270, 500);
     };
 
     var img1 = new Image();
@@ -169,8 +166,6 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#18a000";
       ctx.fillRect(470, 500, 50, 50);
-      ctx.font = "50px Arial";
-      ctx.fillText ("P",470, 500);
     };
 
     var img2 = new Image();
@@ -180,8 +175,6 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#fee700";
       ctx.fillRect(620, 500, 50, 50);
-      ctx.font = "50px Arial";
-      ctx.fillText ("Q",620, 500);
     };
 
     shuffledLocations = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 4)
@@ -211,7 +204,7 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#d20000";
       ctx.fillRect(item_locs[shuffledLocations[2]][0], item_locs[shuffledLocations[2]][1], item_size, item_size);
-    }
+    };
 
     var editedImage = null; // Global variable to store the edited image
     var img5 = new Image();
@@ -222,7 +215,6 @@
       ctx.fillStyle = "#0062d2";
       ctx.fillRect(item_locs[shuffledLocations[3]][0], item_locs[shuffledLocations[3]][1], item_size, item_size); // Apply overlay
     }
-
   }
 
   //  timeline.push(draw_stimulus);
@@ -252,6 +244,8 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#d20000";
       ctx.fillRect(120, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText("U", 120, 500);
     };
 
     var editedImage = null;
@@ -262,6 +256,8 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#0062d2";
       ctx.fillRect(270, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText("R", 270, 500);
     };
 
     var img1 = new Image();
@@ -271,6 +267,8 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#18a000";
       ctx.fillRect(470, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText("P", 470, 500);
     };
 
     var img2 = new Image();
@@ -280,6 +278,8 @@
       ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = "#fee700";
       ctx.fillRect(620, 500, 50, 50);
+      ctx.font = "50px Arial";
+      ctx.fillText("Q", 620, 500);
     };
 
 
