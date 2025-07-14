@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-resize@2.1.0"></script>
   <link href="https://unpkg.com/jspsych@8.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -245,7 +246,7 @@
       ctx.fillStyle = "#d20000";
       ctx.fillRect(120, 500, 50, 50);
       ctx.font = "50px Arial";
-      ctx.fillText("U", 120, 500);
+      ctx.fillText("Q", 120, 500);
     };
 
     var editedImage = null;
@@ -268,7 +269,7 @@
       ctx.fillStyle = "#18a000";
       ctx.fillRect(470, 500, 50, 50);
       ctx.font = "50px Arial";
-      ctx.fillText("P", 470, 500);
+      ctx.fillText("U", 470, 500);
     };
 
     var img2 = new Image();
@@ -279,7 +280,7 @@
       ctx.fillStyle = "#fee700";
       ctx.fillRect(620, 500, 50, 50);
       ctx.font = "50px Arial";
-      ctx.fillText("Q", 620, 500);
+      ctx.fillText("P", 620, 500);
     };
 
 
@@ -306,7 +307,7 @@
     type: jsPsychCanvasKeyboardResponse,
     canvas_size: [600, 800],
     stimulus: drawRect,
-    choices: ['u', 'p', 'q', 'r'],
+    choices: ['q', 'r', 'u', 'p'],
     data: { shape: 'rectangle' },
     correct_response: jsPsych.timelineVariable('correct_response'),
       on_finish: function(data){
