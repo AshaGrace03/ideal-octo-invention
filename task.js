@@ -23,7 +23,7 @@ let canvas_width = 1200 // sets canvas width
 let canvas_height = 500 // sets canvas height
 const item_size = 100 // sets item size
 const n_trials = 8 // Number of trials
-const stim_duration = 500 // Stimulus duration
+const stim_duration = 700 // Stimulus duration
 
 let item_locs = [
     [canvas_width / 3 + item_size * -3, canvas_height / 2 + item_size * 1],
@@ -76,22 +76,26 @@ var resize = {
     <p>This experiment is best completed using a computer mouse rather than a trackpad.</p>
     <p>Click and drag the lower right corner of the box until the box is the same size as a credit card held up to the screen.</p>`,
     pixels_per_unit: 150
-};
+}
 
-//timeline.push(resize)
+timeline.push(resize)
 
 // Start instructions
 // Will need to change for the task later.
 var instructions = {
     type: jsPsychCanvasKeyboardResponse,
-    stimulus: draw_instruction,
+    stimulus: function () {
+        ''
+    },
+    //draw_instruction,
     canvas_size: [500, 1200], // height x width
-    prompt: "Shapes will appear on the screen. If the shape is <strong>Blue</strong>, press the letter R on the keyboard. If the shape is <strong>Red</strong>, press the letter U as fast as you can, If the shape is <strong>Green</strong>, press the letter P as fast as you can and if the shape is <strong>Yellow</strong>, press the letter Q as fast as you can."
+    item_width: 3 + 3 / 8,
+    item_height: 2 + 1 / 8,
+    prompt: "Coloured shapes will appear on the screen in four boxes. Report the colour of the shape that was in the bolded box by clicking the paired letter. Click any key to begin",
+    pixels_per_unit: 500
+};
 
-}
-
-/* Insert images to instructions page */
-function draw_instruction(c) {
+/*function draw_instruction(c) {
     let ctx = c.getContext('2d');  // Get canvas context
     ctx.globalCompositeOperation = "screen"; // Set canvas blending
 
@@ -100,33 +104,29 @@ function draw_instruction(c) {
     img1.onload = function () {
         ctx.drawImage(img1, canvas_width / 2 - item_size * 1.5, 0, item_size, item_size);
         ctx.fillStyle = "#18a000";
-        ctx.fillRect(canvas_width / 2 - item_size * 1.5, 0, item_size, item_size)
-    };
+        ctx.fillRect(canvas_width / 2 - item_size * 1.5, 0, item_size, item_size) };
 
     var img2 = new Image();
     img2.src = "VCSshapes/Shape3.jpg";
     img2.onload = function () {
         ctx.drawImage(img2, canvas_width / 2 - item_size * .5, 0, item_size, item_size);
         ctx.fillStyle = "#fee700";
-        ctx.fillRect(canvas_width / 2 - item_size * .5, 0, item_size, item_size)
-    };
+        ctx.fillRect(canvas_width / 2 - item_size * .5, 0, item_size, item_size)  };
 
     var img3 = new Image();
     img3.src = "VCSshapes/Shape2.jpg";
     img3.onload = function () {
         ctx.drawImage(img3, canvas_width / 2 + item_size * .5, 0, item_size, item_size);
         ctx.fillStyle = "#d20000";
-        ctx.fillRect(canvas_width / 2 + item_size * .5, 0, item_size, item_size);
-    }
+        ctx.fillRect(canvas_width / 2 + item_size * .5, 0, item_size, item_size); }
 
-    var img4 = new Image();
-    img4.src = "VCSshapes/shape.jpg"; // Load the image
-    img4.onload = function () {
+   var img4 = new Image();
+   img4.src = "VCSshapes/shape.jpg"; // Load the image
+   img4.onload = function () {
         ctx.drawImage(img4, canvas_width / 2 + item_size * 1.5, 0, item_size, item_size); // Draw image
         ctx.fillStyle = "#0062d2";
         ctx.fillRect(canvas_width / 2 + item_size * 1.5, 0, item_size, item_size); // Apply overlay
-    }
-}
+}*/
 
 timeline.push(instructions);
 
@@ -194,7 +194,7 @@ function draw_stimulus(c) {
 // Draw blank period
 var blank = {
     type: jsPsychHtmlKeyboardResponse,
-    canvas_size: [600, 800],
+    canvas_size: [500, 1200],
     stimulus: '',
     choices: "NO_KEYS",
     trial_duration: 500,
